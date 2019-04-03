@@ -5,6 +5,7 @@
 
 from random import choice
 import collections
+from math import hypot
 
 Card = collections.namedtuple("Card", ['rank', 'suit'])
 
@@ -37,6 +38,36 @@ class DeskCard:
         return rank_value * 10 + self.suit_values[card.suit]
 
 
+# 二维向量
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return 'Vector(%d, %d)' % (self.x, self.y)
+
+    def __abs__(self):
+        return hypot(self.x, self.y)
+
+    def __add__(self, other):
+        x = self.x + other.x
+        y = self.y + other.y
+        return Vector(x, y)
+
+    # 乘法运算
+    def __mul__(self, other):
+        return Vector(self.x * other, self.y * other)
+
+    # 实现bool的自定义判定
+    def __bool__(self):
+        # return bool(abs(self))
+
+        # 更加快速简单的方法，只要x或者y不同时为0，abs(x, y)就不可能为0，
+        # 这样可以省略去调用__abs__特殊方法的时间
+        return bool(self.x or self.y)
+
+
 if __name__ == '__main__':
     # 随机从序列中抽取元素
     # print(choice(DeskCard()))
@@ -52,7 +83,16 @@ if __name__ == '__main__':
     # 一个集合类型如果没有实现__contains__方法，那么in运算符就会按顺序坐一次迭代搜索，in可以进行使用
     # 因为DeskCard是可以迭代的
 
-    print(Card('Q', 'spades') in desk)
-    print(Card('I', 'spades') in desk)
-    for card in sorted(desk, key=desk.spades_high):
-        print(card)
+    # print(Card('Q', 'spades') in desk)
+    # print(Card('I', 'spades') in desk)
+    # for card in sorted(desk, key=desk.spades_high):
+    #     print(card)
+
+    vector = Vector(1, 2)
+    print(vector*3)
+    vector1 = Vector(1, 2)
+    vector2 = Vector(2, 3)
+    vector3 = vector1 + vector2
+    print(vector3)
+    vector = Vector(0, 0)
+    print(bool(vector))
