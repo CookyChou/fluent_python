@@ -15,7 +15,7 @@ class ExcelSearch:
                 path1 = path.replace("\\", "/")
                 file_path = path1 + "/" + file_name
                 if self._search_in_excel(value, file_path):
-                    return file_path
+                    yield file_path
 
     def _search_in_excel(self, value, file):
         wb = xlrd.open_workbook(filename=file)
@@ -25,7 +25,3 @@ class ExcelSearch:
                 for j in range(sheet1.ncols):
                     if str(sheet1.cell_value(i, j)).find(value) != -1:
                         return True
-
-
-if __name__ == '__main__':
-    print(ExcelSearch().search_in_dir("D:/web_test_ys/data/ys/cases", "SKUA73725"))
