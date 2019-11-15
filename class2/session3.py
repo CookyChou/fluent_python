@@ -9,5 +9,3 @@ colors = ['black', 'white']
 sizes = ['S', 'M', 'L']
 
 print([(color, size) for color in colors for size in sizes])
-
-array.array()
